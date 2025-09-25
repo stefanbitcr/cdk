@@ -139,9 +139,15 @@ impl Proof {
     /// Add Preimage
     #[inline]
     pub fn add_preimage(&mut self, preimage: String) {
+        let signatures = self
+            .witness
+            .as_ref()
+            .map(|w| w.signatures())
+            .unwrap_or_default();
+
         self.witness = Some(Witness::HTLCWitness(HTLCWitness {
             preimage,
-            signatures: None,
+            signatures,
         }))
     }
 }
